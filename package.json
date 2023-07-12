@@ -1,0 +1,70 @@
+{
+  "name": "react-atid22",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/lab": "^5.0.0-alpha.131",
+    "@mui/material": "^5.13.2",
+    "@paypal/react-paypal-js": "^8.0.0",
+    "@react-google-maps/api": "^2.18.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.4.6",
+    "antd-img-crop": "^4.12.2",
+    "aos": "^2.3.4",
+    "axios": "^1.2.3",
+    "bootstrap": "^5.2.3",
+    "chart.js": "^4.3.0",
+    "google-map-react": "^2.2.1",
+    "jewish-date": "^1.0.9",
+    "mdb-react-ui-kit": "^6.0.0",
+    "mdb-ui-kit": "^6.3.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.42.1",
+    "react-icons": "^4.7.1",
+    "react-responsive-masonry": "^2.1.7",
+    "react-router-dom": "^6.7.0",
+    "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
+    "react-toastify": "^9.1.1",
+    "react-underline": "^1.0.0",
+    "recharts": "^2.5.0",
+    "slick-carousel": "^1.8.1",
+    "stylis-plugin-rtl": "^2.1.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+
+  .imgHeader{
+    transition: transform 0.3s ease-in-out;
+  }
+  .imgHeader:hover {
+    transform: scale(1.05);
+    
+  }
