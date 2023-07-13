@@ -34,7 +34,7 @@ export default function Zman() {
     };
     return (
         <>
-            <Card sx={{ width: 345 }}>
+            <Card sx={{ width: 365 }}>
                 <CardActionArea>
                     <CardMedia
                         component="img"

@@ -87,7 +87,7 @@ export default function AppRoutes() {
             <Route path='/donation' element={<DonationsMain />} />
             <Route path={`/branches`}  element={<BranchUserList />} />
             <Route path='/donationSingle/:id' element={<ThemeProvider1><DonationSingle /></ThemeProvider1>} />
-            <Route path='/contact' element={<ThemeProvider1><ContactPost /></ThemeProvider1>} />
+            {/* <Route path='/contact' element={<ThemeProvider1><ContactPost /></ThemeProvider1>} /> */}
             <Route path='/c' element={<ContactPage/>} />
           </Routes>
 

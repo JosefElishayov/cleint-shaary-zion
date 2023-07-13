@@ -1,23 +1,23 @@
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block", background: "blue" }}
-            onClick={onClick}
-        />
-    );
-}
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block", background: "green" }}
-            onClick={onClick}
-        />
-    );
-}
+// function SampleNextArrow(props) {
+//     const { className, style, onClick } = props;
+//     return (
+//         <div
+//             className={className}
+//             style={{ ...style, display: "block", background: "blue" }}
+//             onClick={onClick}
+//         />
+//     );
+// }
+// function SamplePrevArrow(props) {
+//     const { className, style, onClick } = props;
+//     return (
+//         <div
+//             className={className}
+//             style={{ ...style, display: "block", background: "green" }}
+//             onClick={onClick}
+//         />
+//     );
+// }
 
 
 
@@ -54,7 +54,9 @@ const settings = {
             breakpoint: 480,
             settings: {
                 slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToScroll: 1,
+                nextArrow: null,
+                  prevArrow: null
             }
         }
     ]

@@ -12,12 +12,15 @@ export default function AppMain() {
   return (
     <div className=' bg-body-tertiary'>
   
+
       <Section/>
 
       < BranchUserList />
+      <div className='container'>
       <DonationsMain />
+      </div>
       <GalleryMain />
-      <Grid className='py-5 bg-body-tertiary' container spacing={2} justifyContent="space-between" >
+      <Grid className='py-5 bg-body-tertiary' container spacing={2} justifyContent="space-around" >
         <Grid item xs={12} sm={5}>
           <ContactPost />
           </Grid>
