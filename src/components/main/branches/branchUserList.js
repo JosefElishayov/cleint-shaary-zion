@@ -40,9 +40,9 @@ export default function BranchUserList() {
         }
     }
     return (
-        <div className='container-fluid  py-4' style={{}}>
-            <Container>
-                <h2 className='text-center fs-1'>סניפים</h2>
+        <div className='container-fluid my-5 py-4' style={{}}>
+            <Container >
+                <h2 className='text-center display-3 my-5'>סניפים</h2>
                 <Grid container spacing={2} justifyContent="center" sx={{}}>
                     <>
                         {branchList.slice(0, visible).map((branch) => (
@@ -63,7 +63,7 @@ export default function BranchUserList() {
                     </>
 
                 </Grid>
-                {visible === 3 &&
+                {visible !== branchList.length&&
                <Button className='mt-2' onClick={reload}> <Link  to={"/branches"}> לכל הסניפים</Link> </Button>
                 }
             </Container>

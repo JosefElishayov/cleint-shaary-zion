@@ -38,7 +38,6 @@ function EditDonations() {
             console.log(err);
         }
     }
-   
     const doApiEdit = async (_bodyData) => {
         try {
             const url = API_URL + "/donations/" + params["id"];
@@ -76,28 +75,6 @@ function EditDonations() {
                                     />
                                 </Grid>
                             ))}
-                            {/* <Grid item xs={12} sm={4}>
-                                <h6>שם התרומה</h6>
-                                <TextField
-                                    {...register("donations_Name", { required: true })}
-                                    defaultValue={info.donations_Name}
-                                    variant="outlined"
-                                    fullWidth
-                                    error={!!errors.donations_Name}
-                                    helperText={errors.donations_Name ? ' * שדה זה הינו חובה ' : ''}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <h6>סכום התרומה</h6>
-                                <TextField
-                                    {...register("price", { required: true })}
-                                    defaultValue={info.price}                                   
-                                    variant="outlined"
-                                    fullWidth
-                                    error={!!errors.price}
-                                    helperText={errors.price ? ' * שדה זה הינו חובה ' : ''}
-                                />
-                            </Grid> */}
                             <Grid item xs={12} sm={5}>
                                 <h6> אודות </h6>
                                 <textarea className='form-control' placeholder="מידע"

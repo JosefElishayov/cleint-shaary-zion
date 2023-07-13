@@ -1,14 +1,14 @@
-import {  Grid, TextField } from '@mui/material'
+import { Grid, TextField } from '@mui/material'
 import React, { useContext, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { API_URL, doApiMethod } from '../../../services/apiService';
 import { MyContext } from '../../../context/myContext';
-import { center } from '../branches/styleMuiBranch';
-import { Alert, Button, Result } from 'antd';
+import { backgroundPage, center } from '../branches/styleMuiBranch';
+import { Alert, Button, Form, Input, Result } from 'antd';
 export default function ContactPost() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { token } = useContext(MyContext);
-    const[isSuccess,setIsSuccess]=useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
     const msgVal = useRef()
     const doApi = async (_bodyData) => {
         let url
@@ -50,68 +50,75 @@ export default function ContactPost() {
         doApi(bodyMsg)
     };
     return (
-        <div id='ab' className='container text-center  border border-3 rounded-2 my-3 my-sm-0 ms-md-3'>
-            
-            {!isSuccess?
-            
-            <div className={!token.role ? 'd-md-flex mt-5' : ""}  >
-               
-                <div className={token.role ? 'm-5' : ''} style={center}>
-                    <h3
-                    >יש לך בשבילנו הודעה?
-                        <br />
-                        כתוב לנו
-                    </h3>
-                </div>
-                <form onSubmit={handleSubmit(onSubForm)}>
-                    <Grid container spacing={2} justifyContent="center">
+        <div  style={{height:(token.role)?"410px":"", background: backgroundPage, color: "white", maxWidth: 400, borderRadius: "2%" }} className='container text-center p-3 shadow shadow-1-secondary  my-3 my-sm-0 ms-md-3'>
+
+            {!isSuccess ?
+                <div   >
+
+                    <div className='my-2' style={center}>
+                        <h3
+                        >יש לך בשבילנו הודעה?
+                            <br />
+                            כתוב לנו
+                        </h3>
+                    </div>
+                    <Form onFinish={onSubForm}>
                         {!token.role &&
                             <>
                                 {inputEddPost.map((edd, i) => (
-                                    <Grid key={i} item xs={12} sm={9}>
-                                        <TextField
-                                            size='small'
-                                            style={{ borderRadius: "0%", background: "white" }}
-                                            {...register(edd.register, { required: true })}
-                                            label={edd.name}
-                                            variant="outlined"
-                                            fullWidth
-                                            error={!!errors[edd.error]}
-                                            helperText={errors[edd.error] ? ' * שדה זה הינו חובה ' : ''}
-                                        />
-                                    </Grid>
+                                    <Form.Item
+                                        name={edd.register}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'אנא הכנס ' + edd.name,
+                                            },
+                                        ]}
+                                    >
+                                        <Input placeholder={edd.name} />
+                                    </Form.Item>
+                                    
                                 ))}
                             </>
                         }
                         {!token.role ?
-                            <Grid item xs={12} sm={9}>
-                                <h6>תוכן ההודעה</h6>
-                                <textarea rows={4} className='form-control ' {...register("message", { required: true })} >  </textarea>
-                            </Grid> :
-                            <Grid item xs={12} sm={9}>                             
-                                <textarea rows={4} className='form-control ' ref={msgVal} >  </textarea>
-                                <Button  className='my-2' type='button' onClick={onSubButton}>שלח</Button>
-                            </Grid>
+                            <div>
+                                <Form.Item
+                                    name="message"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'אנא הכנס את תוכן ההודעה',
+                                        },
+                                    ]}
+                                >
+                                    <Input.TextArea placeholder="תוכן ההודעה" />
+                                </Form.Item>
+                            </div> :
+                            <div className='my-5'>
+                                <textarea  rows={4} className='form-control ' ref={msgVal} >  </textarea>
+                                <Button  className='my-5 bg-light' type='button' onClick={onSubButton}>שלח</Button>
+                            </div>
                         }
-                    </Grid>
-                    {!token.role &&
-                        <Button htmlType="submit" className='my-2'>שלח</Button>
-                    }
-                </form>
-               
-            </div>:
-            <Result
-            status="success"
-            title="תודה רבה על ההודעה אנחנו ניקח את זה מכאן!"
-            // subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
-            extra={[
-              <Button onClick={()=>{setIsSuccess(false)}} type="primary" key="console">
-                עוד הודעה
-              </Button>,
-            //   <Button key="buy">Buy Again</Button>,
-            ]}
-          />
-}
+
+                        {!token.role &&
+                            <Button htmlType="submit" className='my-2'>שלח</Button>
+                        }
+                    </Form >
+
+                </div> :
+                <Result
+                className='bg-light'
+                    status="success"
+                    title="תודה רבה על ההודעה אנחנו ניקח את זה מכאן!"
+                    extra={[
+                        <Button onClick={() => { setIsSuccess(false) }} type="primary" key="console">
+                            עוד הודעה
+                        </Button>,
+                        //   <Button key="buy">Buy Again</Button>,
+                    ]}
+                />
+            }
         </div>
     )
 }

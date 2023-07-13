@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Pagination, Button, Popconfirm ,message} from "antd";
+import { Pagination, Button, Popconfirm, message, Skeleton } from "antd";
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -17,7 +17,7 @@ import { styleRes } from '../headerAdmin/styleMui';
 import AddDonations from './addDonations';
 export default function DonationsList() {
     const [imageLight, setImageLight] = React.useState(false)
-    const { setIsAddDonations,setAlertMsg } = React.useContext(MyContext);
+    const { setIsAddDonations, setAlertMsg } = React.useContext(MyContext);
     const [ar, setAr] = React.useState([])
     const [selectedRow, setSelectedRow] = React.useState(null);
     const [search, setSearch] = React.useState('')
@@ -66,20 +66,16 @@ export default function DonationsList() {
         setCurrent(page);
     };
     const deleteBranch = async (_idDel) => {
-
         try {
             const url = API_URL + "/donations/" + _idDel;
             const data = await doApiMethod(url, "DELETE");
             if (data.deletedCount) {
                 doApi();
-             
             }
         }
         catch (err) {
-            console.log(err);
-            alert("לא נמחק")
+            console.log(err);   
         }
-
     }
     const handleRowClick = (id) => {
         if (selectedRow === id) {
@@ -90,11 +86,11 @@ export default function DonationsList() {
     };
     const confirm = (e) => {
         deleteBranch(e)
-        setAlertMsg((prevPerson) => ({ ...prevPerson, msg: ' דף התרומה נמחק',isWorker:true , status: "success"}));
-      };
-      const cancel = (e) => {
-        setAlertMsg((prevPerson) => ({ ...prevPerson, msg: 'לא נמחק ',isWorker:true , status: "error"}));
-      };
+        setAlertMsg((prevPerson) => ({ ...prevPerson, msg: ' דף התרומה נמחק', isWorker: true, status: "success" }));
+    };
+    const cancel = (e) => {
+        setAlertMsg((prevPerson) => ({ ...prevPerson, msg: 'לא נמחק ', isWorker: true, status: "error" }));
+    };
     return (
         <Box
             component="main"
@@ -113,69 +109,77 @@ export default function DonationsList() {
                     </Button>
                     <input placeholder="חיפוש כללי..." className='form-check' type="text" onChange={(e) => setSearch(e.target.value)} />
                 </Box>
-                <Paper sx={{ width: '100%', overflow: 'hidden' }} >
-                    <TableContainer sx={{ maxHeight: 440 }} >
-                        <Table stickyHeader aria-label="sticky table" className='table'>
-                            <TableHead sx={{ position: "sticky" }}>
-                                <TableRow >
-                                    <th >#</th>
-                                    <th >שם התרומה</th>
-                                    <th>מחיר</th>
-                                    <th>מידע</th>
-                                    <th>תאריך יצירה</th>
-                                    <th>תמונה</th>
-                                    <th >ערוך/מחק</th>
-                                </TableRow>
-                            </TableHead>
+                {ar[0] ?
+        
+                        <Paper sx={{ width: '100%', overflow: 'hidden' }} >
+                            <TableContainer sx={{ maxHeight: 440 }} >
+                                <Table stickyHeader aria-label="sticky table" className='table'>
+                                    <TableHead sx={{ position: "sticky" }}>
+                                        <TableRow >
+                                            <th >#</th>
+                                            <th >שם התרומה</th>
+                                            <th>מחיר</th>
+                                            <th>מידע</th>
+                                            <th>תאריך יצירה</th>
+                                            <th>תמונה</th>
+                                            <th >ערוך/מחק</th>
+                                        </TableRow>
+                                    </TableHead>
 
-                            <TableBody>
-                                {ar.map((row, i) => {
-                                    const page = current || 0;
-                                    return (
-                                        <>
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
+                                    <TableBody>
+                                        {ar.map((row, i) => {
+                                            const page = current || 0;
+                                            return (
+                                                <>
+                                                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
 
-                                                <td> {((page - 1) * 10) + i + 1}</td>
-                                                <td> {row.donations_Name}</td>
-                                                <td> {row.price}</td>
-                                                <td> {row.info.substring(0, 10)}...</td>
-                                                <td> {row.date_Created.substring(0, 10)}</td>
-                                                <td> <Button onClick={() => {
-                                                    handleRowClick(row._id)
-                                                    setImageLight(true)
-                                                }}> +</Button>
-                                                    {selectedRow === row._id && (
-                                                        <Dialog open={imageLight} onClose={() => { setImageLight(false) }} maxWidth="md" >
-                                                            <DialogContent>
-                                                                <img src={row.img_url} alt="jj" width={450} height={350} />
-                                                            </DialogContent>
-                                                        </Dialog>
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    <Button onClick={() => {nav('/admin/donations/edit/' + row._id)} }>
-                                                        <EditIcon />
-                                                    </Button>
-                                                    <Popconfirm
-                                                        title="מחיקת דף התרומה"
-                                                        description="האם אתה בטוח שברצונך למחוק?"
-                                                        onConfirm={()=>confirm(row._id)}
-                                                        onCancel={cancel}
-                                                        okText="כן"
-                                                        cancelText="לא"
-                                                    >
-                                                        <Button danger><DeleteIcon/></Button>
-                                                    </Popconfirm>                                                  
-                                                </td>
-                                            </TableRow>
-                                        </>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <Pagination style={{ textAlign: "center", padding: "16px" }} current={current} onChange={onChange} total={page.count} />
-                </Paper>
+                                                        <td> {((page - 1) * 10) + i + 1}</td>
+                                                        <td> {row.donations_Name}</td>
+                                                        <td> {row.price}</td>
+                                                        <td> {row.info.substring(0, 10)}...</td>
+                                                        <td> {row.date_Created.substring(0, 10)}</td>
+                                                        <td> <Button onClick={() => {
+                                                            handleRowClick(row._id)
+                                                            setImageLight(true)
+                                                        }}> +</Button>
+                                                            {selectedRow === row._id && (
+                                                                <Dialog open={imageLight} onClose={() => { setImageLight(false) }} maxWidth="md" >
+                                                                    <DialogContent>
+                                                                        <img src={row.img_url} alt="jj" width={450} height={350} />
+                                                                    </DialogContent>
+                                                                </Dialog>
+                                                            )}
+                                                        </td>
+                                                        <td>
+                                                            <Button onClick={() => { nav('/admin/donations/edit/' + row._id) }}>
+                                                                <EditIcon />
+                                                            </Button>
+                                                            <Popconfirm
+                                                                title="מחיקת דף התרומה"
+                                                                description="האם אתה בטוח שברצונך למחוק?"
+                                                                onConfirm={() => confirm(row._id)}
+                                                                onCancel={cancel}
+                                                                okText="כן"
+                                                                cancelText="לא"
+                                                            >
+                                                                <Button danger><DeleteIcon /></Button>
+                                                            </Popconfirm>
+                                                        </td>
+                                                    </TableRow>
+                                                </>
+                                            );
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <Pagination style={{ textAlign: "center", padding: "16px" }} current={current} onChange={onChange} total={page.count} />
+                        </Paper>: <div>
+                            <Skeleton active />
+                            <Skeleton active />
+                            <Skeleton active />
+                        </div>
+                   
+            }
             </Container>
         </Box >
     );

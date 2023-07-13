@@ -36,6 +36,7 @@ export const ContextProvider = ({ children }) => {
   const [isAddDonations, setIsAddDonations] = useState(false)
   const [donationConnect, setDonationConnect] = useState(false)
   const [donationUrl, setDonationUrl] = useState('')
+ const [openLogin, setOpenLogin] = useState(false)
     return (
       <MyContext.Provider
         value={{
@@ -49,7 +50,9 @@ export const ContextProvider = ({ children }) => {
             donationConnect,setDonationConnect,
             donationUrl, setDonationUrl,
             // alert
-            alertMsg, setAlertMsg
+            alertMsg, setAlertMsg,
+            // pozition login
+            openLogin, setOpenLogin
         }}
       >
         {children}

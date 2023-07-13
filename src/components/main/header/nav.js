@@ -15,9 +15,9 @@ export default function Nav() {
     const inputSearch = useRef()
     const nav = useNavigate()
     const [openSearch, setOpenSearch] = useState(false);
-    const [openLogin, setOpenLogin] = useState(false);
+    // const [openLogin, setOpenLogin] = useState(false);
     const [isFixed, setIsFixed] = useState(false);
-    const { token } = useContext(MyContext);
+    const { token ,openLogin, setOpenLogin} = useContext(MyContext);
     const location = useLocation()
 
     // const logo = "https://images.squarespace-cdn.com/content/v1/56962bdcd8af10829fde684a/1492038591117-7F28J09AGCOHY8IHL83E/Chabad+Logo+-+Vertical+-+Color?format=50w"
@@ -56,11 +56,11 @@ export default function Nav() {
                 <div className='d-none d-md-block'>
                     <nav className={!isFixed ? "text-light d-flex justify-content-between" : "d-flex justify-content-between"}>
                         <ul className='d-sm-flex  m-0 ' style={{ listStyle: "none" }}>
-                            {linksObj.map((item) => (
-                                <li onClick={reload}><Link to={item.link} style={{ color: (!isFixed) ? "white" : "black" }} className="listLink">{item.name}</Link></li>
+                            {linksObj.map((item,i) => (
+                                <li key={i} onClick={reload}><Link to={item.link} style={{ color: (!isFixed) ? "white" : "black" }} className="listLink">{item.name}</Link></li>
                             ))}
-                            <li onClick={reloadLocation}><NavLink to={location.pathname !== "/" ? "/" : ""} onClick={() => { window.scroll(1000, 1000) }} style={{ color: (!isFixed) ? "white" : "black" }} className="listLink"> תרומות</NavLink></li>
-                            <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={() => window.scroll(2000, 2000)} style={{ color: (!isFixed) ? "white" : "black" }} className="listLink"> צור קשר</Link></li>
+                            <li onClick={reloadLocation}><NavLink to={location.pathname !== "/" ? "/" : ""} onClick={() => { window.scroll(1500, 1500) }} style={{ color: (!isFixed) ? "white" : "black" }} className="listLink"> תרומות</NavLink></li>
+                            <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={() => window.scroll(2700, 2500)} style={{ color: (!isFixed) ? "white" : "black" }} className="listLink"> צור קשר</Link></li>
                             {token.role &&
                                 <li><Link to="/myAccount" style={{ color: (!isFixed) ? "white" : "black" }} className="listLink">החשבון שלי</Link></li>
                             }
@@ -96,7 +96,7 @@ export default function Nav() {
                         }
                         {openLogin &&
                             <div data-aos="fade-down"
-                                data-aos-duration="1500" style={{ position: "absolute", left: 10, top: 30, width: "300px", height: "" }}><Login/></div>
+                                data-aos-duration="1500" style={{ position: "absolute", left: 10, top: 30, width: "300px", height: "" }}><ThemeProvider1><Login/></ThemeProvider1></div>
                         }
                     </nav>
                 </div>

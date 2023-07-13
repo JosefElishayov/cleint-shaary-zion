@@ -57,10 +57,11 @@
 //   return <DashboardContent />;
 // }
 import React, { useEffect, useState } from 'react';
-import { Layout, Card, Row, Col} from 'antd';
+import { Layout, Card, Row, Col, Skeleton} from 'antd';
 import { Toolbar } from '@mui/material';
 import { API_URL, apiGet } from '../../../services/apiService';
 const { Header, Content, Footer } = Layout;
+const array=[null,null,null,null]
 const Dashboard = () => {
   const [count,setCount]=useState({})
   useEffect(()=>{
@@ -104,6 +105,7 @@ const Dashboard = () => {
       <Content style={{ padding: '0 50px' }}>
         <div className="">
           <Toolbar/>
+      {count.countUsers?
           <Row gutter={[16, 16]}>
             {dataDashboard.map((data,i)=>(
                <Col xs={24} sm={12} md={6}>
@@ -113,9 +115,15 @@ const Dashboard = () => {
              </Col>
             ))}        
           </Row>
+          :
+      <div className='d-flex'>
+        {array.map(()=>(
+          <Skeleton className='me-2' active />
+        ))}
+  </div>
+}
         </div>
       </Content>
-     
       <Footer style={{ textAlign: 'center' }}>מערכת ניהול סניפים ותרומות שערי ציון</Footer>
     </Layout>
     </React.Fragment>

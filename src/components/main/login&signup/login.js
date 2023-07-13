@@ -1,7 +1,6 @@
 import * as React from 'react';
 import LockOutlinedIcon from '@mui/icons-material/Lock';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -17,9 +16,9 @@ import { Avatar } from '@mui/material';
 
 const theme = createTheme();
 export default function Login() {
-  
+
     const nav = useNavigate();
-    const { token, donationConnect, donationUrl,setAlertMsg } = React.useContext(MyContext);
+    const { token, donationConnect, donationUrl, setAlertMsg, openLogin, setOpenLogin } = React.useContext(MyContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const doApiPost = async (_bodyData) => {
         const url = API_URL + "/users/login"
@@ -41,12 +40,12 @@ export default function Login() {
                     }
             }
             else {
-                
-                setAlertMsg((prevPerson) => ({ ...prevPerson, msg: 'You must logged in with admin user',isWorker:true }));
+
+                setAlertMsg((prevPerson) => ({ ...prevPerson, msg: 'You must logged in with admin user', isWorker: true }));
             }
         }
         catch (err) {
-            setAlertMsg((prevPerson) => ({ ...prevPerson, msg: 'אימייל או סיסמא שגויים',isWorker:true ,status:"error"}));
+            setAlertMsg((prevPerson) => ({ ...prevPerson, msg: 'אימייל או סיסמא שגויים', isWorker: true, status: "error" }));
         }
     }
     const onSubForm = (_bodyData) => {
@@ -56,17 +55,18 @@ export default function Login() {
     return (
         <>
             {!token.token &&
-                <ThemeProvider theme={theme}>
+                <div >
                     <Container component="main" maxWidth="xs">
-                        <CssBaseline />
+                        {/* <CssBaseline /> */}
+
                         <Box
                             className="p-4 border"
                             sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', background: "white" }}  >
-                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                <Button onClick={()=>setOpenLogin(false)} color='error'>x</Button>
+                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                                 <LockOutlinedIcon />
-                                </Avatar>
-                               
-
+                            </Avatar>
+                            
                             <Box component="form" onSubmit={handleSubmit(onSubForm)} noValidate>
                                 <TextField
                                     {...register("email", { pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })}
@@ -113,7 +113,7 @@ export default function Login() {
                             </Box>
                         </Box>
                     </Container>
-                </ThemeProvider>
+                </div>
             }
         </>
     );

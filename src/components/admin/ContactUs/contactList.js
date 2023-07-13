@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Pagination } from "antd";
+import { Pagination, Skeleton } from "antd";
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -87,79 +87,85 @@ export default function ContactList() {
         const newStatus = _contactItem.status === "בטיפול" ? "טופל" : "בטיפול";
         const url = `${API_URL}/contact/changeStatus/${_contactItem._id}/${newStatus}`;
         try {
-          const data = await doApiMethod(url, "PATCH");        
-          if (data.modifiedCount) {
-            doApi();
-          }
+            const data = await doApiMethod(url, "PATCH");
+            if (data.modifiedCount) {
+                doApi();
+            }
         }
         catch (error) {
-          console.log(error);
-          alert("There problem, try again later")
+            console.log(error);
+            alert("There problem, try again later")
         }
-      }
+    }
     return (
         <Box
-            component="main"  sx={styleRes}>
+            component="main" sx={styleRes}>
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} >
                 <Toolbar />
                 <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3, mb: 2 }}>
                     <input placeholder="חיפוש כללי..." className='form-check' type="text" onChange={(e) => setSearch(e.target.value)} />
                 </Box>
-                <Paper sx={{ width: '100%', overflow: 'hidden' }} >
-                    <TableContainer sx={{ maxHeight: 440 }} >
-                        <Table stickyHeader aria-label="sticky table" className='table'>
-                            <TableHead sx={{ position: "sticky" }}>
-                                <TableRow >
-                                    <th >פתח</th>
-                                    <th >#</th>
-                                    <th>תאריך שליחה</th>
-                                    <th >שם השולח</th>
-                                    <th>טלפון</th>
-                                    <th>אימייל</th>
-                                    <th>סטטוס</th>
-                                    <th>הודעה</th>
-                                    <th >מחק</th>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {ar.map((row, i) => {
-                                    const page = current || 0;
-                                    return (
-                                        <React.Fragment key={row._id}>
-                                        <TableRow sx={{background: row.status === "בטיפול" ? "'white'" : "gray" }}  hover role="checkbox" tabIndex={-1} >
-                                            <td><button className='badge text-black'
-                                            onClick={() => handleRowClick(row._id)}
-                                            >+</button></td>
-                                            <td> {((page - 1) * 10) + i + 1}</td>
-                                            <td> {row.date_created.substring(0, 10)}</td>
-                                            <td> {row.name}</td>
-                                            <td> {row.phone}</td>
-                                            <td> {row.email}</td>
-                                            <td> <button className='badge' style={{ background: row.status === "בטיפול" ? "red" : "greenyellow" }} onDoubleClick={() => { changeStatus(row) }}>{row.status}</button></td>
-                                            <td> {row.message.substring(0, 10)}...</td>
-                                            <td>
-                                                <Button
-                                                size="small"    color='error' variant="contained" onClick={() => {deleteBranch(row._id)}}>        
-                                                    <DeleteIcon fontSize="small"/>
-                                                </Button>
-                                            </td>
-                                            </TableRow>
-                                            {selectedRow === row._id && (
-                                                <tr>
-                                                <td colSpan={12}>
-                                                    <h5><strong>תוכן הבקשה</strong></h5>                                  
-                                                  <p> {row.message}</p>
-                                                </td>
-                                              </tr>
-                                            )}
-                                           </React.Fragment>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <Pagination style={{ textAlign: "center", padding: "16px" }} current={current} onChange={onChange} total={page.count} />
-                </Paper>
+                {ar[0] ?
+                    <Paper sx={{ width: '100%', overflow: 'hidden' }} >
+                        <TableContainer sx={{ maxHeight: 440 }} >
+                            <Table stickyHeader aria-label="sticky table" className='table'>
+                                <TableHead sx={{ position: "sticky" }}>
+                                    <TableRow >
+                                        <th >פתח</th>
+                                        <th >#</th>
+                                        <th>תאריך שליחה</th>
+                                        <th >שם השולח</th>
+                                        <th>טלפון</th>
+                                        <th>אימייל</th>
+                                        <th>סטטוס</th>
+                                        <th>הודעה</th>
+                                        <th >מחק</th>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {ar.map((row, i) => {
+                                        const page = current || 0;
+                                        return (
+                                            <React.Fragment key={row._id}>
+                                                <TableRow sx={{ background: row.status === "בטיפול" ? "'white'" : "gray" }} hover role="checkbox" tabIndex={-1} >
+                                                    <td><button className='badge text-black'
+                                                        onClick={() => handleRowClick(row._id)}
+                                                    >+</button></td>
+                                                    <td> {((page - 1) * 10) + i + 1}</td>
+                                                    <td> {row.date_created.substring(0, 10)}</td>
+                                                    <td> {row.name}</td>
+                                                    <td> {row.phone}</td>
+                                                    <td> {row.email}</td>
+                                                    <td> <button className='badge' style={{ background: row.status === "בטיפול" ? "red" : "greenyellow" }} onDoubleClick={() => { changeStatus(row) }}>{row.status}</button></td>
+                                                    <td> {row.message.substring(0, 10)}...</td>
+                                                    <td>
+                                                        <Button
+                                                            size="small" onClick={() => { deleteBranch(row._id) }}>
+                                                            <DeleteIcon color='error' fontSize="small" />
+                                                        </Button>
+                                                    </td>
+                                                </TableRow>
+                                                {selectedRow === row._id && (
+                                                    <tr>
+                                                        <td colSpan={12}>
+                                                            <h5><strong>תוכן הבקשה</strong></h5>
+                                                            <p> {row.message}</p>
+                                                        </td>
+                                                    </tr>
+                                                )}
+                                            </React.Fragment>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <Pagination style={{ textAlign: "center", padding: "16px" }} current={current} onChange={onChange} total={page.count} />
+                    </Paper> : <div>
+                        <Skeleton active />
+                        <Skeleton active />
+                        <Skeleton active />
+                    </div>
+                }
             </Container>
         </Box >
     );

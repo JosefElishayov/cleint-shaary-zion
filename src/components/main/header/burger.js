@@ -43,8 +43,8 @@ const Burger = (props) => {
             <Drawer title="שערי ציון" placement="right" onClose={onClose} open={open}>
                 <nav className='text-center '>
                     <ul className='' style={{ listStyle: "none" }}>                       
-                        {linksObj.map((item) => (
-                                <li onClick={reload}> <Link onClick={onClose} to={item.link} style={{color:"black"}} className='listLink display-6 '>{item.name}</Link></li>
+                        {linksObj.map((item,i) => (
+                                <li key={i} onClick={reload}> <Link onClick={onClose} to={item.link} style={{color:"black"}} className='listLink display-6 '>{item.name}</Link></li>
                             ))}
                             <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={()=>{window.scroll(1000,1000);onClose()}}  style={{color:"black"}} className="listLink display-6"> תרומות</Link></li>
                             <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={()=>{window.scroll(2000,2000);onClose()}}  style={{color:"black"}} className="listLink display-6"> צור קשר</Link></li>

@@ -9,7 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import { API_URL, doApiGet, doApiMethod } from '../../../services/apiService';
 import { Container } from '@mui/system';
 import { Box, Toolbar } from '@mui/material';
-import { Pagination, Select, Space } from 'antd';
+import { Pagination, Select, Skeleton, Space } from 'antd';
+import { MyContext } from '../../../context/myContext';
 export default function UserList() {
   const [search, setSearch] = React.useState('')
   const [current, setCurrent] = React.useState(1);
@@ -17,9 +18,9 @@ export default function UserList() {
   const [arBranch, setArBranch] = React.useState([])
   const [selectVal, SetSelectVal] = React.useState("")
   console.log(selectVal);
-
   const nav = useNavigate();
   const [page, setPage] = React.useState(0);
+  const { setAlertMsg } = React.useContext(MyContext);
   React.useEffect(() => {
     doApi();
     doApi()
@@ -35,7 +36,7 @@ export default function UserList() {
       const data = await doApiGet(url);
       setAr(data);
       console.log(data);
-      
+
     }
     catch (err) {
       console.log(err);
@@ -81,6 +82,7 @@ export default function UserList() {
       const data = await doApiMethod(url, "PATCH");
       if (data.modifiedCount) {
         doApi();
+        setAlertMsg((prevPerson) => ({ ...prevPerson, msg: ' עורך סניף עודכן בהצלחה', isWorker: true, status: "success" }));
       }
     }
     catch (error) {
@@ -101,7 +103,7 @@ export default function UserList() {
   const onChange = (page) => {
     setCurrent(page);
   };
- 
+
   return (
     <Box sx={{
       background: "rgb(245, 245, 245);", flexGrow: 1,
@@ -112,6 +114,7 @@ export default function UserList() {
         <Box sx={{ display: "flex", mt: 3, mb: 2 }}>
           <input placeholder="חיפוש כללי..." className='form-check' type="text" onChange={(e) => setSearch(e.target.value)} />
         </Box>
+        {ar[0] ?
         <Paper sx={{ width: '100%', overflow: 'hidden' }} >
           <TableContainer sx={{ maxHeight: 440 }} >
             <Table stickyHeader aria-label="sticky table" className='table'>
@@ -139,14 +142,14 @@ export default function UserList() {
                         <td> {row.email}</td>
                         <td> {row.address}</td>
                         <td> {row.phone}</td>
-                        <td><button className='badge' style={{ background: row.role === "admin" ? "greenyellow" : "silver" }} onDoubleClick={() => { changeRole(row) }}>{row.role}</button></td>
+                        <td><button className='badge' style={{ background: row.role === "admin" ? "greenyellow" : "silver", border: "none" }} onDoubleClick={() => { changeRole(row) }}>{row.role}</button></td>
                         <td>
                           <Space wrap>
                             <Select
                               defaultValue={row.editBranch}
                               style={{ width: 120 }}
                               onChange={changeEditBranch}
-                              onClick={()=>{SetSelectVal(row._id)}}
+                              onClick={() => { SetSelectVal(row._id) }}
                               options={arBranch.map((province, index) => ({
                                 label: province.brunch_name,
                                 value: province.brunch_name,
@@ -163,7 +166,13 @@ export default function UserList() {
             </Table>
           </TableContainer>
           <Pagination style={{ textAlign: "center", padding: "16px" }} current={current} onChange={onChange} total={page.count} />
-        </Paper>
+        </Paper>:
+        <div>
+          <Skeleton active />
+          <Skeleton active />
+          <Skeleton active />
+        </div>
+        }
       </Container>
     </Box>
   );
