@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { MyContext } from '../../../context/myContext';
 import { styleRes } from '../headerAdmin/styleMui';
 import AddDonations from './addDonations';
+import Copyright from '../headerAdmin/CopRight';
 export default function DonationsList() {
     const [imageLight, setImageLight] = React.useState(false)
     const { setIsAddDonations, setAlertMsg } = React.useContext(MyContext);
@@ -99,8 +100,9 @@ export default function DonationsList() {
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} >
                 <Toolbar />
                 <AddDonations />
-                <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3, mb: 2 }}>
+                <div className='d-sm-flex justify-content-between mt-3 mb-2'>
                     <Button
+                    className='mb-3 mb-sm-0'
                         color='primary'
                         variant="contained"
                         onClick={() => { setIsAddDonations(true) }}
@@ -108,7 +110,7 @@ export default function DonationsList() {
                         הקמת תרומה
                     </Button>
                     <input placeholder="חיפוש כללי..." className='form-check' type="text" onChange={(e) => setSearch(e.target.value)} />
-                </Box>
+                </div>
                 {ar[0] ?
         
                         <Paper sx={{ width: '100%', overflow: 'hidden' }} >
@@ -181,6 +183,7 @@ export default function DonationsList() {
                    
             }
             </Container>
+            <Copyright/>
         </Box >
     );
 }

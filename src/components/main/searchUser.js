@@ -45,14 +45,14 @@ export default function SearchUser() {
     }
   };
   return (
-    <div className='container mt-5'>
-      <div className='my-3 text-center'>
-      <h1 >תוצאות חיפוש</h1>
-      <button onClick={filterDonation}
-        className='btn btn-info'>תרומות</button>
-      <button onClick={filterBranch}
-        className='btn btn-danger me-3'>סניפים</button>
-        </div>
+    <div className='container mt-md-5'>
+      <div className='py-4 text-center'>
+        <h1 className='pt-5 pb-2 display-3'>תוצאות חיפוש</h1>
+        <button onClick={filterDonation}
+          className='btn btn-info'>תרומות</button>
+        <button onClick={filterBranch}
+          className='btn btn-danger me-3'>סניפים</button>
+      </div>
       {arrSearch.branch && arrSearch.donation ?
         <Grid container spacing={2} justifyContent="center">
           {isBranch &&
@@ -92,13 +92,13 @@ export default function SearchUser() {
               ))}
             </>
           }
-        </Grid> :""
-     
-     }
-       {arrSearch.branch?
+        </Grid> : ""
+
+      }
+      {arrSearch.branch ?
         <Pagination style={{ textAlign: "center", padding: "16px" }} current={current} onChange={onChange} total={(arrSearch.branch.length + arrSearch.donation.length)} />
-    :   <h2 className='text-center'>לא מצאנו את מה שחיפשת</h2>
-     }
+        : <h2 className='text-center'>לא מצאנו את מה שחיפשת</h2>
+      }
     </div>
   )
 }

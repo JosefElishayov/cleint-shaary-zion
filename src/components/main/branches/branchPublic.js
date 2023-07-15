@@ -6,7 +6,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import GoogleMapReact from 'google-map-react';
 import { Box, Button, Dialog, DialogContent, Grid, Typography } from '@mui/material';
 import './branch.css';
-import { backgroundBody, backgroundPage, boxAboutStyle, center,  textColor } from './styleMuiBranch';
+import { backgroundBody, backgroundPage, boxAboutStyle, center, textColor } from './styleMuiBranch';
 import { useParams } from 'react-router-dom';
 import { Card, Carousel } from 'antd';
 function BranchPublic() {
@@ -20,16 +20,16 @@ function BranchPublic() {
     const [data, setData] = useState({ img: "", i: 0 })
     const params = useParams();
     const [imgModal, setImgModal] = useState(false)
-   
+    const isBelowThreshold = window.innerWidth < 768;
     useEffect(() => {
         doApiBranch()
-    
+
     }, [])
     const doApiBranch = async () => {
         // setIsLoading(true);
         const url = API_URL + "/branches/single/" + params["id"];
-       
-        
+
+
         const data = await apiGet(url);
         // setIsLoading(false);
         setInfo((data));
@@ -41,6 +41,7 @@ function BranchPublic() {
     };
     const viewImage = (img, i) => {
         setData({ img, i })
+        if(!isBelowThreshold)
         setImgModal(true)
     }
     const imgAction = (action) => {
@@ -61,7 +62,7 @@ function BranchPublic() {
         } else {
             setLoadMoreImage("אין יותר תמונות")
         }
-    } 
+    }
     const handleWazeNavigation = () => {
         const address = encodeURIComponent(info.address);
         window.open(`https://waze.com/ul?q=${address}`);
@@ -96,11 +97,11 @@ function BranchPublic() {
         carouselRef.current.next();
     };
     return (
-        <div className='container-fluid p-0 '>
+        <div className='container-fluid p-0  '>
             {info.brunch_name &&
                 <>
                     {data.img &&
-                        <Dialog open={imgModal} onClose={() => { setImgModal(false) }} maxWidth="md" fullWidth >
+                        <Dialog className='d-none d-sm-block' open={imgModal} onClose={() => { setImgModal(false) }} maxWidth="md" fullWidth >
                             <DialogContent>
 
                                 <img
@@ -135,60 +136,60 @@ function BranchPublic() {
                     </div>
                     <div className='mx-md-5 mx-3 mt-3'>
 
-                        <Grid container spacing={2} justifyContent="center">
-                            {info.news[2]&&
-                            <Grid item xs={12} sm={7}>
-                                <div >
-                                    <h2 className='text-center '>עדכונים אחרונים</h2>
-                                    <Carousel
-                                        ref={carouselRef}
-                                        autoplay
-                                        vertical
-                                        slidesToShow={3}
-                                        slidesToScroll={1}
-                                        
-                                    >
-                                        {info.news.map((update, index) => (
-                                            <div key={index}>
-                                                <Card style={{background:backgroundBody}}>
-                                                    <p>{update}</p>
-                                                </Card>
-                                            </div>
-                                        ))}
-                                    </Carousel>
-                                    <div style={{ textAlign: "center", marginTop: "16px" }}>
-                                        <Button sx={{background:backgroundPage,marginX:"8px"}} variant='contained' onClick={handlePrev} >
-                                            קודם
-                                        </Button>
-                                        <Button sx={{background:backgroundPage}} variant='contained'  onClick={handleNext}>הבא</Button>
+                        <Grid sx={{mb:5}} container spacing={2} justifyContent="center">
+                            {info.news[2] &&
+                                <Grid item xs={12} sm={7}>
+                                    <div >
+                                        <h2 className='text-center display-3 '>עדכונים אחרונים</h2>
+                                        <Carousel
+                                            ref={carouselRef}
+                                            autoplay
+                                            vertical
+                                            slidesToShow={3}
+                                            slidesToScroll={1}
+
+                                        >
+                                            {info.news.map((update, index) => (
+                                                <div key={index}>
+                                                    <Card style={{ background: backgroundBody }}>
+                                                        <p>{update}</p>
+                                                    </Card>
+                                                </div>
+                                            ))}
+                                        </Carousel>
+                                        <div style={{ textAlign: "center", marginTop: "16px" }}>
+                                            <Button sx={{ background: backgroundPage, marginX: "8px" }} variant='contained' onClick={handlePrev} >
+                                                קודם
+                                            </Button>
+                                            <Button sx={{ background: backgroundPage }} variant='contained' onClick={handleNext}>הבא</Button>
+                                        </div>
                                     </div>
+                                </Grid>
+                            }
+                            <Grid item xs={12} sm={12}>
+                                <div className='mt-3' style={{ textAlign: "center", color: textColor }}>
+                                    <ResponsiveMasonry >
+                                        <h3 className='display-3 py-4'>גלריה</h3>
+                                        <Masonry gutter='18px'>
+                                            {arr.slice(0, visible).map((image, i) => (
+                                                <img
+                                                    key={i}
+                                                    src={image}
+                                                    style={{ width: "100%", display: "block" }}
+                                                    alt=""
+                                                    onClick={() => viewImage(image, i)}
+                                                    width={100}
+                                                    height={300}
+                                                />
+                                            ))}
+                                        </Masonry>
+                                    </ResponsiveMasonry >
+                                    <button className='btn' style={{ margin: "8px", background: backgroundPage, color: textColor }} onClick={showMoreImage}>{loadMoreImage}</button>
                                 </div>
                             </Grid>
-}
-                            <Grid item xs={12} sm={12}>
-                            <div className='mt-3' style={{ textAlign: "center", color: textColor }}>
-                            <ResponsiveMasonry >
-                                <h3>גלריה</h3>
-                                <Masonry gutter='18px'>
-                                    {arr.slice(0, visible).map((image, i) => (
-                                        <img
-                                            key={i}
-                                            src={image}
-                                            style={{ width: "100%", display: "block" }}
-                                            alt=""
-                                            onClick={() => viewImage(image, i)}
-                                            width={100}
-                                            height={300}
-                                        />
-                                    ))}
-                                </Masonry>
-                            </ResponsiveMasonry >
-                            <button className='btn' style={{ margin: "8px", background: backgroundPage, color: textColor }} onClick={showMoreImage}>{loadMoreImage}</button>
-                        </div>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid  item xs={12} sm={6}>
                                 <div style={boxAboutStyle}>
-                                    <h2 style={{ textAlign: "center" }}>פרטים וצור קשר</h2>
+                                    <h2 className='display-6' style={{ textAlign: "center" }}>פרטים וצור קשר</h2>
                                     <div style={{ marginTop: "10px", textAlign: "center" }}>
                                         <p>
                                             <strong>אימייל:</strong><br />
@@ -208,32 +209,14 @@ function BranchPublic() {
                                     </div>
                                 </div>
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid  item xs={12} sm={6}>
                                 <div style={{ border: "solid", background: backgroundPage, textAlign: "center", height: "300px" }}>
                                     <MapComponent />
                                     <button className='btn m-2' style={{ background: backgroundBody }} onClick={handleWazeNavigation}>לחץ לניווט</button>
                                 </div>
                             </Grid>
                         </Grid>
-                        {/* <div className='mt-3' style={{ textAlign: "center", color: textColor }}>
-                            <ResponsiveMasonry >
-                                <h3>גלריה</h3>
-                                <Masonry gutter='18px'>
-                                    {arr.slice(0, visible).map((image, i) => (
-                                        <img
-                                            key={i}
-                                            src={image}
-                                            style={{ width: "100%", display: "block" }}
-                                            alt=""
-                                            onClick={() => viewImage(image, i)}
-                                            width={100}
-                                            height={300}
-                                        />
-                                    ))}
-                                </Masonry>
-                            </ResponsiveMasonry >
-                            <button className='btn' style={{ margin: "8px", background: backgroundPage, color: textColor }} onClick={showMoreImage}>{loadMoreImage}</button>
-                        </div> */}
+
                     </div>
                 </>
             }

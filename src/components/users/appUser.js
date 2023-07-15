@@ -51,18 +51,15 @@ export default function AppUser() {
     const nav=useNavigate()
     React.useEffect(() => {
         doApi();
-
     }, [])
 
     React.useEffect(() => {
-            doApiBranch()
-       
+            doApiBranch()      
     }, [])
     const doApi = async () => {
         let url = API_URL + `/users/userInfo`
         try {
             const data = await doApiGet(url);
-            console.log(data);
             setInfo(data);
         }
         catch (err) {
@@ -88,8 +85,7 @@ export default function AppUser() {
     const checkUserIfEdit = () => {
         for (let i=0;i<branchList.length;i++){         
             if (branchList[i].brunch_name===info.editBranch){ 
-                // nav("/branch/edit/"+branchList[i]._id) 
-                serEntryEdit(branchList[i]._id)              
+                serEntryEdit(branchList[i]._id)   
             }             
         }
     }
@@ -97,12 +93,10 @@ export default function AppUser() {
         localStorage.removeItem(KEY_TOKEN)
         nav("/")
         window.location.reload()
-
       }
     return (
         <div className="container-fluid" style={{ background: "rgb(247, 242, 228)" }}>
-            <Container className="center" sx={{ background: "rgb(247, 242, 228)" }}>
-              
+            <Container className="center" sx={{ background: "rgb(247, 242, 228)" }}>           
                 <Box sx={{ borderBottom: 1, borderColor: "divider", paddingTop: "128px" }}>
                 <Button onClick={logOut}>התנתק</Button>
                 
@@ -129,6 +123,8 @@ export default function AppUser() {
                 {info.editBranch !== "לא עורך" &&
                     <TabPanel value={value} index={2}>
                        <EditBranch itemId={entryEdit}/>
+                       {console.log(entryEdit)
+                       }
                     </TabPanel>
                 }
             </Container>

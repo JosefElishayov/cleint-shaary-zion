@@ -19,7 +19,6 @@ function DonationSingle() {
     const [isPay, setIsPay] = useState(false)
     const inputRef = useRef(null)
     const numberRef = useRef()
-    const isBelowThreshold = window.innerWidth < 768;
     useEffect(() => {
         if (donationConnect)
             window.location.reload()
@@ -40,13 +39,13 @@ function DonationSingle() {
     const styleMainImg = {
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "80vh",
+        height: "620px",
         display: 'flex',
         justifyContent: "center",
         alignItems: "center",
     }
     return (
-        <div style={{ background: backgroundBody ,marginTop:(!isBelowThreshold)?"50px":"0px" }} className='container-fluid p-0 '>
+        <div style={{ background: backgroundBody }} className='container-fluid p-0 '>
             {!token.role &&
                 <ConnectUser isConnect={isConnect} setIsConnect={setIsConnect} />
             }
@@ -62,7 +61,7 @@ function DonationSingle() {
                             </Grid>
                             <Grid className='my-5 mt-sm-0' sx={center} item xs={12} sm={6} >
 
-                                <Card className='w-75 mt-3' data-aos="fade-right" >
+                                <Card className='w-75 mt-md-5' data-aos="fade-left" >
                                     <CardContent >
                                         <div className='mx-md-5' style={{ textAlign: "center", color: backgroundPage }}>
                                             <div className='my-3' style={{}}>

@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Box, CardActionArea} from '@mui/material';
+import { Box, CardActionArea, Container } from '@mui/material';
 import { toJewishDate, formatJewishDateInHebrew } from "jewish-date";
 import { citiZman } from './objectZman';
 export default function Zman() {
@@ -24,7 +24,7 @@ export default function Zman() {
             setAr(data);
         }
         catch (err) {
-            
+
             console.log(err);
             alert('something wrong come back later');
         }
@@ -33,8 +33,8 @@ export default function Zman() {
         doApi(event);
     };
     return (
-        <>
-            <Card sx={{ width: 365 }}>
+        <div className='container'>
+            <Card sx={{ maxWidth: "100%" }}>
                 <CardActionArea>
                     <CardMedia
                         component="img"
@@ -76,7 +76,7 @@ export default function Zman() {
                                 <Typography variant="subtitle2" color="text.secondary">
                                     {citiZman.map((zman) => (
                                         <>
-                                           {ar.times[zman.zmanTime].slice(11, 16)}
+                                            {ar.times[zman.zmanTime].slice(11, 16)}
                                             <br />
                                         </>
                                     ))}
@@ -87,6 +87,6 @@ export default function Zman() {
                 </CardActionArea>
             </Card>
 
-        </>
+        </div>
     );
 }

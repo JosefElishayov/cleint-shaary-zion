@@ -57,14 +57,16 @@
 //   return <DashboardContent />;
 // }
 import React, { useEffect, useState } from 'react';
-import { Layout, Card, Row, Col, Skeleton} from 'antd';
-import { Toolbar } from '@mui/material';
+import { Layout, Card, Row, Col, Skeleton } from 'antd';
+import { Box, Toolbar } from '@mui/material';
 import { API_URL, apiGet } from '../../../services/apiService';
+import { styleRes } from './styleMui';
+import Copyright from './CopRight';
 const { Header, Content, Footer } = Layout;
-const array=[null,null,null,null]
+const array = [null, null, null, null]
 const Dashboard = () => {
-  const [count,setCount]=useState({})
-  useEffect(()=>{
+  const [count, setCount] = useState({})
+  useEffect(() => {
     doApi()
   })
   const doApi = async () => {
@@ -75,58 +77,59 @@ const Dashboard = () => {
     setCount((data));
   };
   const getTotalPercentage = (value) => `${(value / 1000) * 100}%`;
-  const dataDashboard=[
+  const dataDashboard = [
     {
-      name:"משתמשים",
-      backgroundColor:"#1890ff", 
-      textCount:count.countUsers
+      name: "משתמשים",
+      backgroundColor: "#1890ff",
+      textCount: count.countUsers
     }, {
-      name:"הכנסות ",
-      backgroundColor:"#52c41a",     
-      textCount:count.totalAmount+"₪"
+      name: "הכנסות ",
+      backgroundColor: "#52c41a",
+      textCount: count.totalAmount + "₪"
     }, {
-      name:"תרומות",
-      backgroundColor:"#faad14",
-      textCount:count.countPurchases
+      name: "תרומות",
+      backgroundColor: "#faad14",
+      textCount: count.countPurchases
     }, {
-      name:"סניפים",
-      backgroundColor:"#eb2f96",
-      textCount:count.countBranch
+      name: "סניפים",
+      backgroundColor: "#eb2f96",
+      textCount: count.countBranch
     },
   ]
 
   return (
-<React.Fragment >
+    <Box  component="main"
+    sx={styleRes}>
 
-    <Layout >  
-      <Header >
+      <Layout className='py-3' >
+        {/* <Header >
         <div className="logo" />
-      </Header>
-      <Content style={{ padding: '0 50px' }}>
-        <div className="">
-          <Toolbar/>
-      {count.countUsers?
-          <Row gutter={[16, 16]}>
-            {dataDashboard.map((data,i)=>(
-               <Col xs={24} sm={12} md={6}>
-               <Card title={data.name} bordered={false} style={{ backgroundColor: data.backgroundColor, color: '#fff' }}>
-                 <h1 style={{ fontSize: '48px', fontWeight: 'bold' }}>{data.textCount}</h1>
-               </Card>
-             </Col>
-            ))}        
-          </Row>
-          :
-      <div className='d-flex'>
-        {array.map(()=>(
-          <Skeleton className='me-2' active />
-        ))}
-  </div>
-}
-        </div>
-      </Content>
+      </Header> */}
+        <Content className='py-3' style={{ padding: '0 50px' }}>
+          <div className="">
+            <Toolbar />
+            {count.countUsers ?
+              <Row gutter={[16, 16]}>
+                {dataDashboard.map((data, i) => (
+                  <Col xs={24} sm={12} md={6}>
+                    <Card title={data.name} bordered={false} style={{ backgroundColor: data.backgroundColor, color: '#fff' }}>
+                      <h1 style={{ fontSize: '48px', fontWeight: 'bold' }}>{data.textCount}</h1>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+              :
+              <div className='d-flex'>
+                {array.map(() => (
+                  <Skeleton className='me-2' active />
+                ))}
+              </div>
+            }
+          </div>
+        </Content>
       <Footer style={{ textAlign: 'center' }}>מערכת ניהול סניפים ותרומות שערי ציון</Footer>
-    </Layout>
-    </React.Fragment>
+      </Layout>
+    </Box>
   );
 };
 

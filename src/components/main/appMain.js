@@ -8,27 +8,29 @@ import Section from './section/section'
 import { Grid } from '@mui/material'
 
 export default function AppMain() {
-  
+
   return (
     <div className=' bg-body-tertiary'>
-  
 
-      <Section/>
+
+      <Section />
 
       < BranchUserList />
       <div className='container'>
-      <DonationsMain />
+        <DonationsMain />
       </div>
       <GalleryMain />
-      <Grid className='py-5 bg-body-tertiary' container spacing={2} justifyContent="space-around" >
-        <Grid item xs={12} sm={5}>
-          <ContactPost />
-          </Grid>
-          <Grid  item xs={12} sm={5}>
-          <Zman />
-          </Grid>
-        
-        </Grid>
+
+        <div className='bg-body-tertiary py-5 container justify-content-around d-sm-flex'>
+          <div className='col-md-4'>
+            <ContactPost />
+          </div>
+          <div className='col-md-4 mt-5 mt-md-0 '>
+            <Zman />
+          </div>
+
+        </div>
+   
     </div>
   )
 }

@@ -11,6 +11,8 @@ import { Container } from '@mui/system';
 import { Box, Toolbar } from '@mui/material';
 import { Pagination, Select, Skeleton, Space } from 'antd';
 import { MyContext } from '../../../context/myContext';
+import { styleRes } from '../headerAdmin/styleMui';
+import Copyright from '../headerAdmin/CopRight';
 export default function UserList() {
   const [search, setSearch] = React.useState('')
   const [current, setCurrent] = React.useState(1);
@@ -105,10 +107,8 @@ export default function UserList() {
   };
 
   return (
-    <Box sx={{
-      background: "rgb(245, 245, 245);", flexGrow: 1,
-      height: '100vh',
-    }}>
+    <Box  component="main"
+    sx={styleRes}>
       <Container  >
         <Toolbar />
         <Box sx={{ display: "flex", mt: 3, mb: 2 }}>
@@ -174,6 +174,7 @@ export default function UserList() {
         </div>
         }
       </Container>
+      <Copyright/>
     </Box>
   );
 }

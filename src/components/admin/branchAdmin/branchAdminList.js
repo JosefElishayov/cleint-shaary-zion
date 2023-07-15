@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { MyContext } from '../../../context/myContext';
 import AddBranch from './addBranch';
 import { styleRes } from '../headerAdmin/styleMui';
+import Copyright from '../headerAdmin/CopRight';
 export default function BranchAdminList() {
   const { setIsAddBranch, setAlertMsg } = React.useContext(MyContext);
   const [ar, setAr] = React.useState([])
@@ -95,16 +96,19 @@ export default function BranchAdminList() {
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} >
         <Toolbar />
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3, mb: 2 }}>
+       
+          <div className='d-sm-flex justify-content-between mt-3 mb-2'>
           <Button
+          className='mb-3 mb-sm-0'
             color='primary'
             variant="contained"
             onClick={() => { setIsAddBranch(true) }}
           >
             הוספת סניף
-          </Button>
+          </Button >
           <input placeholder="חיפוש כללי..." className='form-check' type="text" onChange={(e) => setSearch(e.target.value)} />
-        </Box>
+          </div>
+    
         {ar[0] ?
           <>
             <Paper sx={{ width: '100%', overflow: 'hidden' }} >
@@ -119,7 +123,8 @@ export default function BranchAdminList() {
                       <th>אודות הסניף</th>
                       <th> חדשות</th>
                       <th>מספר הטלפון</th>
-                      <th >ערוך/מחק</th>
+                      <th >ערוך</th>
+                      <th >מחק</th>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -134,14 +139,14 @@ export default function BranchAdminList() {
                           <td> {row.description}</td>
                           <td>{row.news[2]}..</td>
                           <td> {row.phone}</td>
-                          <td>
-                            <Button size="small"
+                          <td> <Button size="small"
                                 onClick={() => {
                                 nav('/admin/branch/edit/' + row._id);
                               }
                               }>
                               <EditIcon fontSize='small' />
-                            </Button>
+                            </Button></td>
+                          <td >
                             <Popconfirm
                               title="מחיקת הסניף "
                               description="האם אתה בטוח שברצונך למחוק?"
@@ -150,7 +155,7 @@ export default function BranchAdminList() {
                               okText="כן"
                               cancelText="לא"
                             >
-                              <Button ><DeleteIcon color='error'/></Button>
+                              <Button ><DeleteIcon fontSize='small' color='error'/></Button>
                             </Popconfirm>
                           </td>
                         </TableRow>
@@ -168,6 +173,7 @@ export default function BranchAdminList() {
           </div>
         }
       </Container>
+      <Copyright/>
     </Box >
   );
 }

@@ -10,9 +10,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { styleRes } from '../headerAdmin/styleMui';
 import Copyright from '../headerAdmin/CopRight';
 import { inputDonation } from './data/objDonation';
+import LoadingButton from '@mui/lab/LoadingButton';
 function EditDonations() {
+    const [loading, setLoading] = useState(false)
     const [info, setInfo] = useState({});
-    const { image} = useContext(MyContext);
+    const { image, setAlertMsg, setImage } = useContext(MyContext);
     const { handleFileUpload } = useUploadImage();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const params = useParams();
@@ -23,6 +25,8 @@ function EditDonations() {
     useEffect(() => {
         if (image) {
             setValue("img_url", image);
+            setLoading(false)
+            
         }
     }, [image]);
     const onSubForm = (_bodyData) => {
@@ -43,7 +47,8 @@ function EditDonations() {
             const url = API_URL + "/donations/" + params["id"];
             const data = await doApiMethod(url, "PUT", _bodyData);
             if (data.modifiedCount) {
-                alert(" דף התרומה עודכן");
+                // alert(" דף התרומה עודכן");
+                setAlertMsg((prevPerson) => ({ ...prevPerson, msg: "דף התרומה עודכן", isWorker: true, status: "success" }));
                 nav("/admin/donationsList");
             }
         } catch (error) {
@@ -51,6 +56,11 @@ function EditDonations() {
             alert("There problem, try again later")
         }
     }
+    const ButtonLoa = (
+        <LoadingButton loading color='error' variant="outlined">
+            Submit
+        </LoadingButton>
+    )
     return (
         <Box sx={styleRes} >
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -59,13 +69,13 @@ function EditDonations() {
                 {info._id &&
                     <form onSubmit={handleSubmit(onSubForm)}>
                         <Grid container spacing={2} justifyContent="center">
-                        {inputDonation.map((edit, i) => (
+                            {inputDonation.map((edit, i) => (
                                 <Grid key={i} item xs={12} sm={4}>
                                     <h6>{edit.name}</h6>
                                     <TextField
                                         {...register(edit.register, { required: true })}
                                         defaultValue={
-                                            info[edit.register] 
+                                            info[edit.register]
                                         }
                                         label=""
                                         variant="outlined"
@@ -84,14 +94,15 @@ function EditDonations() {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <Box sx={{ textAlign: 'center' }}>
-                                    <Typography variant="h6">העלאת תמונות</Typography>
+                                    <Typography variant="h6">עדכון תמונות</Typography>
                                     <IconButton color="primary" component="label">
-                                        <PhotoCamera />
+                                        {loading && !image ? ButtonLoa : <PhotoCamera />}
                                         <input
                                             type="file"
                                             hidden accept="image/*"
                                             onChange={(e) => {
                                                 handleFileUpload(e.target.files);
+                                                setLoading(true)
                                             }}
                                         />
                                     </IconButton>
@@ -100,11 +111,11 @@ function EditDonations() {
                         </Grid>
                         <Grid textAlign={'center'} item xs={12} sm={6}>
                             <Typography variant="h4" >תמונה</Typography>
-                            <img style={{maxWidth:"450px",width:"100%"}} src={image?image:info.img_url} alt={"donations pic"}  height={300}/>
+                            <img style={{ maxWidth: "450px", width: "100%" }} src={image ? image : info.img_url} alt={"donations pic"} height={300} />
                         </Grid>
                         <Grid container spacing={2} justifyContent="center">
                             <Grid sx={{ textAlign: "center", marginTop: "16px" }} item xs={12} sm={6}>
-                                <Button sx={{ marginX: "8px" }} type="submit" variant="contained" color="primary"
+                                <Button sx={{ marginX: "8px" }} type="button" variant="contained" color="primary"
                                     onClick={() => { nav(-1) }}>
                                     חזור
                                 </Button>
@@ -113,11 +124,11 @@ function EditDonations() {
                                 </Button>
                             </Grid>
                         </Grid>
-                    </form> 
-                    }
-                    {/* : <h2> ...</h2>} */}
-            <Copyright sx={{ pt: 4 }} />
-        </Container>
+                    </form>
+                }
+                {/* : <h2> ...</h2>} */}
+                <Copyright sx={{ pt: 4 }} />
+            </Container>
         </Box >
     );
 }

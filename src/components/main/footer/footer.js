@@ -62,19 +62,19 @@ const Footer = () => {
               ))}
             </ul>
           </div> */}
-          <div className="col-md-4">
+          <div className="col-md-4 mb-3 mb-md-0 ">
             <h3>צור קשר</h3>
             <ul className="list-unstyled p-0 m-0">
-              <li>
-                <a href={`https://goo.gl/maps/TrstXzAVEvQa9JSn8`}>{branchAr.address}</a>
+              <li >
+                <a className='ms-2 link-nav' href={`https://goo.gl/maps/TrstXzAVEvQa9JSn8`}>{branchAr.address}</a>
                 <MapIcon />
               </li>
-              <li>
-                <a href={`tel:${branchAr.phone}`}>{branchAr.phone}</a>
+              <li className='my-2'>
+                <a className='ms-2 ' href={`tel:${branchAr.phone}`}>{branchAr.phone}</a>
                 <LocalPhoneIcon />
               </li>
               <li>
-                <a href={`mailto:${branchAr.email}`}>{branchAr.email}</a>
+                <a className='ms-2' href={`mailto:${branchAr.email}`}>{branchAr.email}</a>
                 <MarkAsUnreadIcon />
               </li>
             </ul>
@@ -86,7 +86,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-12">
             <hr />
-            <p className="text-center">© 2023 Your Company. All rights reserved.</p>
+            <p className="text-center">© כל הזכויות שמורות א.י.ה שרותי מחשב</p>
           </div>
         </div>
       </div>

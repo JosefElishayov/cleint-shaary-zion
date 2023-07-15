@@ -63,7 +63,7 @@ export default function UserInfo() {
                                         <Box sx={{ textAlign: "center" }}>
                                             <h3>פרטי חשבון</h3>
                                             {inputEditUser.map((edit, i) => (
-                                                <Box key={i} sx={{ maxWidth: "100%", marginTop: "16px" }} >
+                                                <Box key={i} sx={{ maxWidth: "100%", }} >
                                                     {borderInput === "" ?
                                                         <>
                                                             <h6>{edit.name}</h6>
@@ -94,7 +94,7 @@ export default function UserInfo() {
                             </Grid>
                         {/* </div> */}
                         {/* <div className='mt-3 mt-sm-0 me-sm-5' style={{ width: 345, maxWidth: "100%", height: "100%" }}> */}
-                        <Grid item xs={12} sm={6} sx={{minHeight:"100%"}}>
+                        <Grid item xs={12} sm={6} >
                             <ChangePass doApi={doApi} item={info} />
                             </Grid>
                         {/* </div> */}

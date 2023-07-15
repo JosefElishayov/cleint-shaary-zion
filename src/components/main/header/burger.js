@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Drawer } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
@@ -14,6 +14,7 @@ const Burger = (props) => {
     const {location,reloadLocation,reload}=props
     const [open, setOpen] = useState(false);
     const { token } = useContext(MyContext);
+    const inputSearch = useRef()
     const nav=useNavigate()
     // const logo = "https://images.squarespace-cdn.com/content/v1/56962bdcd8af10829fde684a/1492038591117-7F28J09AGCOHY8IHL83E/Chabad+Logo+-+Vertical+-+Color?format=50w"
     const showDrawer = () => {
@@ -32,7 +33,7 @@ const Burger = (props) => {
         <div className='p-2 m-0'>
             <div className='d-flex justify-content-between'>
                 <div >
-                    <Link to={"/"}><img alt='logo' src="/images/logo.png" height={50} /></Link>
+                    <a href='/'> <img alt='logo' src="/images/logo.png" height={50} /></a>
                 </div>
 
                 <Button variant='outline-success' type="primary" onClick={showDrawer}>
@@ -46,10 +47,10 @@ const Burger = (props) => {
                         {linksObj.map((item,i) => (
                                 <li key={i} onClick={reload}> <Link onClick={onClose} to={item.link} style={{color:"black"}} className='listLink display-6 '>{item.name}</Link></li>
                             ))}
-                            <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={()=>{window.scroll(1000,1000);onClose()}}  style={{color:"black"}} className="listLink display-6"> תרומות</Link></li>
-                            <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={()=>{window.scroll(2000,2000);onClose()}}  style={{color:"black"}} className="listLink display-6"> צור קשר</Link></li>
+                            <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={()=>{window.scroll(1400,1400);onClose()}}  style={{color:"black"}} className="listLink display-6"> תרומות</Link></li>
+                            <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={()=>{window.scroll(2600,2600);onClose()}}  style={{color:"black"}} className="listLink display-6"> צור קשר</Link></li>
                               {token.role&&
-                            <li><Link to="/myAccount" onClick={onClose} style={{color:"black"}} className='listLink fs-3 '>החשבון שלי</Link></li>
+                            <li onClick={reload}><Link to="/myAccount" onClick={onClose} style={{color:"black"}} className='listLink fs-3 '>החשבון שלי</Link></li>
                             }
                     </ul>
                     <div className="d-flex m-2 " >
@@ -58,12 +59,12 @@ const Burger = (props) => {
                             placeholder="חיפוש"
 
                             className="mx-2  "
-                            // aria-label="Search"
-                            //   ref={inputSearch}
+                            aria-label="Search"
+                              ref={inputSearch}
                             size='sm'
                         />
                         <Button type='button'
-                            // onClick={()=>{nav("/search/"+inputSearch.current.value);window.location.reload()}} 
+                            onClick={()=>{nav("/search/"+inputSearch.current.value);window.location.reload();onClose()}} 
                             variant="outline-success"><SearchIcon fontSize='medium' /></Button>
                     </div>
 

@@ -15,6 +15,8 @@ import { inputEditBranch } from './objBranch';
 import { Skeleton } from 'antd';
 function EditBranch(props) {
     const { itemId } = props;
+    console.log(itemId);
+    
     const [loading, setLoading] = useState(false)
     const [firstImg, setFirstImg] = useState("")
     const [checkFirstImg, setCheckFirstImg] = useState(false)
@@ -244,7 +246,7 @@ function EditBranch(props) {
                                             <Button onClick={() => { handleClose(); setArr([]) }} color="error" variant="contained">
                                                 מחיקת כל התמונות
                                             </Button>
-                                            <Button sx={{ marginX: "8px" }} type="submit" variant="contained" color="primary"
+                                            <Button sx={{ marginX: "8px" }} type="button" variant="contained" color="primary"
                                                 onClick={() => { nav(-1) }}>
                                                 חזור
                                             </Button>

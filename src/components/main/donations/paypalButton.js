@@ -1,21 +1,27 @@
 import { PayPalButtons } from '@paypal/react-paypal-js'
 import React, { useState } from 'react'
 import { API_URL, doApiMethod } from '../../../services/apiService';
+import { useContext } from 'react';
+import { MyContext } from '../../../context/myContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function PaypalButton(props) {
     const { product,dataId } = props
+    const { setAlertMsg } = useContext(MyContext);
+    const nav=useNavigate()
     const changeStatus = async () => {
         const newStatus = "שולם"
         const url = `${API_URL}/purchase/paid/${dataId}/${newStatus}`;
         try {
           const data = await doApiMethod(url, "PATCH");
           if (data.modifiedCount) {
-           console.log("yes");
+              setAlertMsg((prevPerson) => ({ ...prevPerson, msg: 'יישר כח גדול על התרומה בתרומתך אתה שותף בהחזקת עולם התרומה', isWorker: true, status: "success" }));
+              nav(-1)
           }
         }
         catch (error) {
           console.log(error);
-          alert("There problem, try again later")
+
         }
       }
     const [paidFor, setPaidFor] = useState(false)
@@ -24,8 +30,8 @@ export default function PaypalButton(props) {
         setPaidFor(true)    
     }
     if(paidFor){
-        // alert("תודה רבה על התרומה")
         changeStatus()
+    
     }
     if (error){
         alert(error)

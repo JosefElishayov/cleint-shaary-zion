@@ -50,7 +50,7 @@ export default function ContactPost() {
         doApi(bodyMsg)
     };
     return (
-        <div  style={{height:(token.role)?"410px":"",maxWidth:"410px", background: backgroundPage, color: "white", borderRadius: "2%" }} className='container text-center p-3 shadow shadow-1-secondary  my-3 '>
+        <div  style={{height:(token.role)?"410px":"",maxWidth:"430px", background: backgroundPage, color: "white", borderRadius: "2%" }} className='container text-center p-3 shadow shadow-1-secondary  '>
 
             {!isSuccess ?
                 <div   >

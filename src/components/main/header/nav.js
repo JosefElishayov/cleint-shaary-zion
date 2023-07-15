@@ -15,11 +15,10 @@ export default function Nav() {
     const inputSearch = useRef()
     const nav = useNavigate()
     const [openSearch, setOpenSearch] = useState(false);
-    // const [openLogin, setOpenLogin] = useState(false);
     const [isFixed, setIsFixed] = useState(false);
     const { token ,openLogin, setOpenLogin} = useContext(MyContext);
     const location = useLocation()
-
+   
     // const logo = "https://images.squarespace-cdn.com/content/v1/56962bdcd8af10829fde684a/1492038591117-7F28J09AGCOHY8IHL83E/Chabad+Logo+-+Vertical+-+Color?format=50w"
     useEffect(() => {
         const handleScroll = () => {
@@ -37,14 +36,13 @@ export default function Nav() {
         AOS.refresh();
     }, []);
     const reload = () => {
-        if (isFixed) {
+     
             window.location.reload("/")
-        }
+        
     }
     const reloadLocation = () => {
         if (location.pathname !== "/")
             window.location.reload()
-        // window.scroll(1000, 1000)
     }
     return (
         <div>
@@ -62,7 +60,7 @@ export default function Nav() {
                             <li onClick={reloadLocation}><NavLink to={location.pathname !== "/" ? "/" : ""} onClick={() => { window.scroll(1500, 1500) }} style={{ color: (!isFixed) ? "white" : "black" }} className="listLink"> תרומות</NavLink></li>
                             <li onClick={reloadLocation}><Link to={location.pathname !== "/" ? "/" : ""} onClick={() => window.scroll(2700, 2500)} style={{ color: (!isFixed) ? "white" : "black" }} className="listLink"> צור קשר</Link></li>
                             {token.role &&
-                                <li><Link to="/myAccount" style={{ color: (!isFixed) ? "white" : "black" }} className="listLink">החשבון שלי</Link></li>
+                                <li onClick={reload}><Link to="/myAccount" style={{ color: (!isFixed) ? "white" : "black" }} className="listLink">החשבון שלי</Link></li>
                             }
                         </ul>
                         <ul className='d-flex justify-content-between m-0 p-0' style={{ listStyle: "none", textAlign: "left" }}>
@@ -71,7 +69,7 @@ export default function Nav() {
                                     <Button onClick={() => { setOpenSearch(true) }} style={{ color: (!isFixed) ? "white" : "black" }} size='lg' variant='outline'><SearchIcon /></Button>
                                 </li>
                             }
-                            {!openLogin &&
+                            {!openLogin && !token.role&&
                                 <li className='mt-1'>
                                     <Button onClick={() => { setOpenLogin(true) }} style={{ color: (!isFixed) ? "white" : "black" }} size='lg' variant='outline'>  <LockOutlinedIcon /></Button>
                                 </li>
@@ -101,7 +99,7 @@ export default function Nav() {
                     </nav>
                 </div>
                 <div className='d-md-none '>
-                    <Burger location={location} reload={reload} reloadLocation={reloadLocation}/>
+                    <Burger location={location} reload={reload} reloadLocation={reloadLocation} />
                 </div>
             </header>
         </div>

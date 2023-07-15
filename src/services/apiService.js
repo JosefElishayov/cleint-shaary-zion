@@ -1,6 +1,6 @@
 import axios from "axios";
-export const API_URL = "http://localhost:3002";
-// export const API_URL = "https://shiny-calf-fatigues.cyclic.app";
+// export const API_URL = "http://localhost:3002";
+export const API_URL = "https://upset-shorts-mite.cyclic.app/"
 
 export const KEY_TOKEN = "bible_token"
 // export const API_URL = "https://monkeys.co.il";

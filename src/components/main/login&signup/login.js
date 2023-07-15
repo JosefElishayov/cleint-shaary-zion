@@ -56,13 +56,13 @@ export default function Login() {
         <>
             {!token.token &&
                 <div >
-                    <Container component="main" maxWidth="xs">
-                        {/* <CssBaseline /> */}
-
+                    <Container className='py-sm-0 py-5 shadow' component="main" maxWidth="xs">
                         <Box
-                            className="p-4 border"
-                            sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', background: "white" }}  >
+                            className="className='mb-5 mt-md-5 pt-5 pt-md-0'  p-3"
+                            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: "white" }}  >
+                                {openLogin&&
                                 <Button onClick={()=>setOpenLogin(false)} color='error'>x</Button>
+}
                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                                 <LockOutlinedIcon />
                             </Avatar>
@@ -105,7 +105,7 @@ export default function Login() {
                                 <Grid container>
 
                                     <Grid item>
-                                        <Link href="signup" variant="body2">
+                                        <Link href="/signup" variant="body2">
                                             {"אין לך חשבון?הירשם"}
                                         </Link>
                                     </Grid>

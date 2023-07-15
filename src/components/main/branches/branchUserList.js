@@ -35,13 +35,13 @@ export default function BranchUserList() {
         setBranchList((data));
     };
     const reload = () => {
-        if (visible === 3) {
+        if (visible !== branchList.length) {
             window.location.reload()
         }
     }
     return (
-        <div className='container-fluid my-5 py-4' style={{}}>
-            <Container >
+        <div className='container-fluid  py-4' style={{}}>
+            <Container className='my-5'>
                 <h2 className='text-center display-3 my-5'>סניפים</h2>
                 <Grid container spacing={2} justifyContent="center" sx={{}}>
                     <>
